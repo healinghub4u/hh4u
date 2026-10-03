@@ -37,7 +37,7 @@ object NetworkModule {
             .addInterceptor { chain ->
                 val original = chain.request()
                 val path = original.url.encodedPath
-                val publicAuth = path.startsWith("/api/auth/") && path !in listOf("/api/auth/me", "/api/auth/logout")
+                val publicAuth = path.startsWith("/api/auth/") && path !in listOf("/api/auth/me", "/api/auth/logout", "/api/auth/profile")
                 val token = if (publicAuth) null else sessionStore.token()
                 val request = original.newBuilder().apply {
                     if (token != null) header("Authorization", "Bearer $token")
